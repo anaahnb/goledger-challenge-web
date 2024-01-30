@@ -1,0 +1,14 @@
+{
+  "name": "Scrobble",
+  "short_name": "Scrobble",
+  "icons": [
+    {
+      "src": "/img/lastfm_icon_512",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "description": "Scrobble é uma plataforma musical e digital para registrar os hábitos de consumo de música",
+  "display": "fullscreen",
+  "start_url": "/"
+}
