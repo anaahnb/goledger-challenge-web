@@ -1,12 +1,39 @@
-export default function Home() {
+import ArtistSection from "@/components/Artist/ArtistSection";
+import ArtistsGallery from "@/components/ArtistGallery";
+import Button from "@/components/Button";
+import Headers from "@/components/Header";
+import SongSection from "@/components/Song/SongSection";
+
+export default function Page() {
+  
+  const artists = {
+    images: [
+      {
+        src: 'https://pbs.twimg.com/media/FfmKAiFaEAIUFTu?format=jpg&name=4096x4096',
+        alt: 'Two each of gray, white, and black shirts laying flat.',
+      },
+      {
+        src: 'https://pbs.twimg.com/media/FYxkvfcXkAQvVxf?format=jpg&name=large',
+        alt: 'Model wearing plain black basic tee.',
+      },
+      {
+        src: 'https://pbs.twimg.com/media/FfmKZVpagAAiVMG?format=jpg&name=4096x4096',
+        alt: 'Model wearing plain gray basic tee.',
+      },
+      {
+        src: 'https://pbs.twimg.com/media/FYxkw6qX0AYdtgC?format=jpg&name=large',
+        alt: 'Model wearing plain white basic tee.',
+      },
+    ]
+  }
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-      </div>
-    </main>
-  );
+    <div className="flex flex-col justify-center gap-10 mb-10">
+      <Headers />
+      <SongSection />
+      <ArtistsGallery artists={artists} />
+      <ArtistSection />
+    </div>
+  )
 }
+
