@@ -1,7 +1,11 @@
+import AlbumSection from "@/components/Album/AlbumSection";
 import ArtistSection from "@/components/Artist/ArtistSection";
 import ArtistsGallery from "@/components/ArtistGallery";
+import Footer from "@/components/Footer";
 import Headers from "@/components/Header";
+import PlaylistSection from "@/components/Playlist/PlaylistSection";
 import SongSection from "@/components/Song/SongSection";
+import PlaylistContextProvider from "@/context/Playlist/provider";
 
 export default function Page() {
   
@@ -29,9 +33,19 @@ export default function Page() {
   return (
     <div className="flex flex-col justify-center gap-10 pb-10 bg-white min-h-screen">
       <Headers />
+      
       <SongSection />
+
       <ArtistsGallery artists={artists} />
+
       <ArtistSection />
+
+      <PlaylistContextProvider>
+        <PlaylistSection />
+      </PlaylistContextProvider>
+
+      <AlbumSection />
+      <Footer />
     </div>
   )
 }
