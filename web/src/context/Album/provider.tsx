@@ -1,5 +1,4 @@
 "use client";
-
 import { useCallback, useState } from "react";
 import api from "@/services/api";
 import { Album } from "@/utils/data";
@@ -12,18 +11,45 @@ interface AlbumContextProviderProps {
 export default function AlbumContextProvider(props: AlbumContextProviderProps) {
   const [albums, setAlbums] = useState<AlbumItem[]>([]);
 
-  async function handleAlbumData(albumsData: Album[]): Promise<AlbumItem[]> {
-    const albums = albumsData.map((album: Album) => {
+  const fetchArtistData = useCallback(async (artistId: string[]) => {
+    try {
+      const response = await api.post("query/search", {
+        query: {
+          selector: {
+            "@assetType": "artist",
+            "@key": { $in: artistId }
+          },
+          fields: ["@key", "name"]
+        }
+      });
+      const artistData = response.data.result;
+
+      return artistData; 
+    } catch (error) {
+      console.error("Error fetching artist data:", error);
+      return null;
+    }
+  }, []);
+  
+
+  const handleAlbumData = async (albumsData: Album[]): Promise<AlbumItem[]> => {
+    const albumsWithArtists = await Promise.all(albumsData.map(async (album: Album) => {
+      const artistData = await fetchArtistData([album.artist["@key"]]);
+      const artistName = artistData.length > 0 ? artistData[0].name : 'Desconhecido';
+
+      console.log(artistName);
+
       return {
         id: album["@key"],
         title: album.title,
-        artist: album.artist["@key"],
+        artist: artistName,
         rating: album.rating,
-        releaseDate: album.releaseDate
+        releaseDate: album.releaseDate,
       };
-    });
-    return albums;
-  }
+    }));
+    return albumsWithArtists;
+  };
+  
 
   const fetchAlbums = useCallback(async (limit?: number) => {
     try {
@@ -41,7 +67,7 @@ export default function AlbumContextProvider(props: AlbumContextProviderProps) {
       const albums = await handleAlbumData(albumsData);
       setAlbums(albums);
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching albums:", error);
       throw error;
     }
   }, []);

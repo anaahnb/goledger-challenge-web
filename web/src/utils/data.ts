@@ -14,7 +14,7 @@ export interface Song {
 export interface Album {
   "@key": string;
   title: string;
-  artist: Id;
+  artist: Artist;
   rating: number;
   releaseDate: string;
   songs: Id[];
