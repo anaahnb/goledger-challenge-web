@@ -2,13 +2,14 @@
 
 import React, { useContext, useEffect, useState } from 'react';
 import { ArtistContext, ArtistItem } from '@/context/Artist';
-import SearchGroup from '@/components/SearchGroup';
+import SearchGroup from '@/components/SearchGroup'; 
 
 interface ArtistListProps {
-  limite?: number; 
+  limite?: number;
+  showSearchGroup?: boolean; 
 }
 
-export default function ArtistList({ limite }: ArtistListProps) {
+export default function ArtistList({ limite, showSearchGroup = false }: ArtistListProps) {
   const { artists, fetchArtists } = useContext(ArtistContext);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredArtists, setFilteredArtists] = useState<ArtistItem[]>([]);
@@ -30,16 +31,18 @@ export default function ArtistList({ limite }: ArtistListProps) {
   }, [searchTerm, artists]);
 
   const handleSearch = (term: string) => {
-    setSearchTerm(term); // Atualize o termo de pesquisa
+    setSearchTerm(term);
   };
 
   return (
     <div className="max-w-7xl flex flex-col items-center">
-      <SearchGroup 
-        onSearch={handleSearch} // Passe a função handleSearch para o componente SearchGroup
-        placeholder="Pesquisar artista" 
-        hrefCreate="/artist/create/" 
-      />
+      {showSearchGroup && (
+        <SearchGroup 
+          onSearch={handleSearch} 
+          placeholder="Pesquisar artista" 
+          hrefCreate="/artist/create/" 
+        />
+      )}
 
       <div className="flex flex-wrap gap-6">
         {filteredArtists.map(artist => (

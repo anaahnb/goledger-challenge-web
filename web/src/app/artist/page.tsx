@@ -14,7 +14,7 @@ export default function Artist() {
         </div>
 
         <ArtistContextProvider>
-          <ArtistList />
+          <ArtistList showSearchGroup/>
         </ArtistContextProvider>
 
       </section>
