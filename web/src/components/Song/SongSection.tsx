@@ -1,10 +1,6 @@
-"use client";
 
-import ArtistContextProvider from "@/context/Artist/provider";
-import Image from "next/image";
 import SongList from "./SongList";
 import SongContextProvider from "@/context/Song/provider";
-import Button from "../Button";
 
 
 export default function SongSection() {

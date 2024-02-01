@@ -1,3 +1,5 @@
+"use client";
+
 import { useContext, useEffect } from 'react';
 import { SongContext } from '@/context/Song';
 
@@ -12,7 +14,7 @@ export default function SongList() {
       <div className='flex flex-wrap gap-6'>
         {songs && songs.map((song) => (
           <div className='w-56 space-y-4'>
-            <div className='h-56 bg-zinc-300' key={song.id}></div>
+            <div className='h-56 bg-zinc-100' key={song.id}></div>
             <div className='space-y-1 capitalize'>
               <h2 className='text-orange-700 font-semibold capitalize'>{song.title}</h2>
               <p className='flex items-center gap-2'>

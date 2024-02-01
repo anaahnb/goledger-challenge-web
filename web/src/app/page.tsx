@@ -1,6 +1,5 @@
 import ArtistSection from "@/components/Artist/ArtistSection";
 import ArtistsGallery from "@/components/ArtistGallery";
-import Button from "@/components/Button";
 import Headers from "@/components/Header";
 import SongSection from "@/components/Song/SongSection";
 
@@ -28,7 +27,7 @@ export default function Page() {
   }
 
   return (
-    <div className="flex flex-col justify-center gap-10 mb-10">
+    <div className="flex flex-col justify-center gap-10 pb-10 bg-white min-h-screen">
       <Headers />
       <SongSection />
       <ArtistsGallery artists={artists} />

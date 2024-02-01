@@ -1,8 +1,8 @@
 "use client";
-import { useCallback, useContext, useState } from "react";
 
-import api from "@/services/api";
-import { Artist } from "@/utils/data";
+import { useCallback, useState } from "react";
+import api from "@/services/api"; 
+import { Artist } from "@/utils/data"; 
 import { ArtistContext, ArtistItem } from ".";
 
 interface ArtistContextProviderProps {
@@ -42,7 +42,9 @@ export default function ArtistContextProvider(props: ArtistContextProviderProps)
       console.error(error);
       throw error;
     }
- }, []);
+  }, []);
+
+
 
   const values = {
     artists,

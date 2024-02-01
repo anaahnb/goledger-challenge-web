@@ -1,3 +1,4 @@
+import { CreateAnArtist, UpdateAnArtist } from "@/utils/data";
 import { createContext } from "react";
 
 interface ArtistProps {

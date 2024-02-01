@@ -32,3 +32,10 @@ export interface Playlist {
   description: string;
   songs: Id[];
 }
+
+export interface ArtistFormData extends Artist {
+  "@assetType": "artist";
+}
+
+export interface CreateAnArtist extends Omit<Artist, "@key"> {}
+export interface UpdateAnArtist extends Partial<ArtistFormData> {}

@@ -1,9 +1,7 @@
-"use client";
-
 import ArtistContextProvider from "@/context/Artist/provider";
 import ArtistList from "./ArtistList";
-import Image from "next/image";
 import Button from "../Button";
+import { Link } from "react-router-dom";
 
 
 export default function ArtistSection() {
@@ -11,8 +9,8 @@ export default function ArtistSection() {
   return (
 
     <section className="flex flex-col items-center">
-      <div className="mb-16">
-        <Button type="primary" text="Explorar os artistas do momento" />
+      <div className="mb-16 mt-10">
+        <Button text="Descobrir outros artistas" />
       </div>
 
       <div className="space-y-4 mb-8">
@@ -22,7 +20,7 @@ export default function ArtistSection() {
       <ArtistContextProvider>
         <ArtistList />      
       </ArtistContextProvider>
+
     </section>
- 
   )
 }

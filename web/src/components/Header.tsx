@@ -1,5 +1,3 @@
-import Button from "./Button";
-
 export default function Headers() {
   return (
     <header className="lg:mx-72 md:mx-0 md:px-24 bg-zinc-900 max-2xl border-t-8 border-orange-700">
@@ -22,7 +20,6 @@ export default function Headers() {
           <p className="mt-6 text-lg leading-8 text-neutral-300">
             Sinta músicas, encontre albuns e descubra artistas. Compartilhe com a gente um mix em constante expansão de músicas!
           </p>
-          <Button text="Fazer o seu próprio upload" />
         </div>
       </div>
     </header>
