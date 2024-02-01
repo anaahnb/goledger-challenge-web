@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation'
 
-export default function ArtistForm() {
+export default function SongForms() {
   const [formData, setFormData] = useState({ name: '', about: '' });
   const [successMessage, setSuccessMessage] = useState(false);
   const router = useRouter()

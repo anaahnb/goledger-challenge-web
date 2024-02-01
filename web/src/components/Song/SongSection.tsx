@@ -1,4 +1,5 @@
-
+import Link from "next/link";
+import Button from "../Button";
 import SongList from "./SongList";
 import SongContextProvider from "@/context/Song/provider";
 
@@ -12,7 +13,13 @@ export default function SongSection() {
       </div>
       <SongContextProvider>
         <SongList />              
-      </SongContextProvider>  
+      </SongContextProvider>
+
+      <div className="mt-20">
+        <Link href={'/songs'}>
+          <Button text="Sentir outras músicas" />  
+        </Link>
+      </div>
     </section>
  
   )

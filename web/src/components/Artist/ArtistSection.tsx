@@ -1,7 +1,7 @@
 import ArtistContextProvider from "@/context/Artist/provider";
 import ArtistList from "./ArtistList";
 import Button from "../Button";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 
 export default function ArtistSection() {
@@ -10,7 +10,9 @@ export default function ArtistSection() {
 
     <section className="flex flex-col items-center">
       <div className="mb-16 mt-10">
-        <Button text="Descobrir outros artistas" />
+        <Link href={'/artist'}>
+          <Button text="Descobrir outros artistas" />
+        </Link>
       </div>
 
       <div className="space-y-4 mb-8">
