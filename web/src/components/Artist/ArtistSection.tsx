@@ -20,7 +20,7 @@ export default function ArtistSection() {
       </div>
 
       <ArtistContextProvider>
-        <ArtistList />      
+        <ArtistList limite={6} />      
       </ArtistContextProvider>
 
     </section>
