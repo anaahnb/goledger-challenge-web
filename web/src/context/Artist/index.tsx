@@ -1,9 +1,11 @@
-import { CreateAnArtist, UpdateAnArtist } from "@/utils/data";
+"use client";
+
 import { createContext } from "react";
 
 interface ArtistProps {
   artists: ArtistItem[];
   fetchArtists: (limit?: number) => Promise<void>;
+  searchArtist: (artistName: string) => Promise<ArtistItem | undefined>; // Adicionando a função searchArtist
 }
 
 export interface ArtistItem {

@@ -44,11 +44,36 @@ export default function ArtistContextProvider(props: ArtistContextProviderProps)
     }
   }, []);
 
+  const searchArtist = useCallback(async (artistName: string) => {
+    try {
+      const response = await api.post("query/readAsset", {
+        key: {
+          "@assetType": "artist",
+          "name": artistName
+        }
+      });
 
+      const artistData = response.data.result;
+      if (artistData) {
+        const artistItem: ArtistItem = {
+          id: artistData["@key"],
+          name: artistData.name,
+          about: artistData.about
+        };
+        return artistItem;
+      } else {
+        return undefined;
+      }
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }, []);
 
   const values = {
     artists,
     fetchArtists,
+    searchArtist
   };
 
   return <ArtistContext.Provider value={values}>{props.children}</ArtistContext.Provider>;
