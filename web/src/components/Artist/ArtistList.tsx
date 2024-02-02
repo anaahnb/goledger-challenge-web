@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { ArtistContext, ArtistItem } from '@/context/Artist';
 import SearchGroup from '@/components/SearchGroup'; 
 import DropdownButton from '../DropdownButton';
+import Loading from '../Loading';
 
 interface ArtistListProps {
   limite?: number;
@@ -14,9 +15,11 @@ export default function ArtistList({ limite, showSearchGroup = false }: ArtistLi
   const { artists, fetchArtists, deleteArtist } = useContext(ArtistContext);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredArtists, setFilteredArtists] = useState<ArtistItem[]>([]);
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
-    fetchArtists(limite);
+    setLoading(true); 
+    fetchArtists(limite).then(() => setLoading(false)); 
   }, [fetchArtists, limite]);
 
   useEffect(() => {
@@ -55,27 +58,31 @@ export default function ArtistList({ limite, showSearchGroup = false }: ArtistLi
         />
       )}
 
-      <div className="flex flex-wrap gap-6">
-        {filteredArtists.map(artist => (
-          <div className="relative w-56 space-y-4" key={artist.id}>
-            <div className="h-56 bg-zinc-100 rounded-full"></div>
-            <div className="space-y-1 capitalize">
-              <div className='flex gap-4 justify-center items-center'>
-                <h2 className="text-orange-700 text-xl text-center font-semibold capitalize">
-                  {artist.name}
-                </h2>
-                <DropdownButton
-                  options={[
-                    { label: 'Excluir', onClick: () => handleDeleteArtist(artist.id) },
-                    { label: 'Editar', onClick: () => handleDeleteArtist(artist.id) },
-                  ]}
-                />
 
+      {loading ? (
+          <Loading type='spin' color='#b43629'/>
+      ) : (
+        <div className="flex flex-wrap gap-6">
+          {filteredArtists.map(artist => (
+            <div className="relative w-56 space-y-4" key={artist.id}>
+              <div className="h-56 bg-zinc-100 rounded-full"></div>
+              <div className="space-y-1 capitalize">
+                <div className='flex gap-4 justify-center items-center'>
+                  <h2 className="text-orange-700 text-xl text-center font-semibold capitalize">
+                    {artist.name}
+                  </h2>
+                  <DropdownButton
+                    options={[
+                      { label: 'Excluir', onClick: () => handleDeleteArtist(artist.id) },
+                      { label: 'Editar', onClick: () => handleDeleteArtist(artist.id) },
+                    ]}
+                  />
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
