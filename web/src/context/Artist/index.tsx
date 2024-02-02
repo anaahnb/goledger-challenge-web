@@ -6,6 +6,7 @@ interface ArtistProps {
   artists: ArtistItem[];
   fetchArtists: (limit?: number) => Promise<void>;
   searchArtist: (artistName: string) => Promise<ArtistItem | undefined>; 
+  deleteArtist: (artistId: string) => Promise<void>;
 }
 
 export interface ArtistItem {

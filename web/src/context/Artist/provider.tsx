@@ -11,6 +11,7 @@ interface ArtistContextProviderProps {
 
 export default function ArtistContextProvider(props: ArtistContextProviderProps) {
   const [artists, setArtists] = useState<ArtistItem[]>([]);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   async function handleArtistData(artistsData: Artist[]): Promise<ArtistItem[]> {
     const artists = artistsData.map((artist: Artist) => {
@@ -70,10 +71,75 @@ export default function ArtistContextProvider(props: ArtistContextProviderProps)
     }
   }, []);
 
+  const checkArtistLink = useCallback(async (artistId: string): Promise<boolean> => {
+    try {
+      const responseMusic = await api.post("query/search", {
+        query: {
+          selector: {
+            "@assetType": "song",
+            "artists.@key": artistId
+          },
+          fields: ["@key"],
+          limit: 1
+        }
+      });
+  
+      const musicData = responseMusic.data.result;
+      if (musicData && musicData.length > 0) {
+        return true;
+      }
+  
+      const responseAlbum = await api.post("query/search", {
+        query: {
+          selector: {
+            "@assetType": "album",
+            "artists.@key": artistId
+          },
+          fields: ["@key"],
+          limit: 1
+        }
+      });
+  
+      const albumData = responseAlbum.data.result;
+      if (albumData && albumData.length > 0) {
+        return true;
+      }
+  
+      return false;
+    } catch (error) {
+      console.error('Erro ao verificar vínculos do artista:', error);
+      throw error;
+    }
+  }, []);  
+
+  const deleteArtist = useCallback(async (artistId: string) => {
+    try {
+      const isLinked = await checkArtistLink(artistId);
+      if (isLinked) {
+        throw new Error('Não é possível excluir este artista pois está vinculado a uma música ou álbum.');
+      }
+
+      await api.delete(`invoke/deleteAsset`, {
+        data: {
+          key: {
+            "@assetType": "artist",
+            "@key": artistId
+          }
+        }
+      });
+
+      fetchArtists();
+    } catch (error) {
+      console.error('Erro ao excluir artista:', error);
+      throw error;
+    }
+  }, [fetchArtists, checkArtistLink]);
+
   const values = {
     artists,
     fetchArtists,
-    searchArtist
+    searchArtist,
+    deleteArtist,
   };
 
   return <ArtistContext.Provider value={values}>{props.children}</ArtistContext.Provider>;
