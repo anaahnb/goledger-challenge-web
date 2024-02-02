@@ -5,7 +5,7 @@ import { createContext } from "react";
 interface ArtistProps {
   artists: ArtistItem[];
   fetchArtists: (limit?: number) => Promise<void>;
-  searchArtist: (artistName: string) => Promise<ArtistItem | undefined>; // Adicionando a função searchArtist
+  searchArtist: (artistName: string) => Promise<ArtistItem | undefined>; 
 }
 
 export interface ArtistItem {

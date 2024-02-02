@@ -17,7 +17,7 @@ export default function Album() {
         {/* <SearchGroup hrefCreate="/songs/create" placeholder="Pesquisar artista" /> */}
 
         <AlbumContextProvider>
-          <AlbumList />      
+          <AlbumList showSearchGroup/>      
         </AlbumContextProvider>
 
       </section>

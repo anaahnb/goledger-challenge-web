@@ -6,9 +6,10 @@ import SearchGroup from "@/components/SearchGroup";
 
 interface AlbumListProps {
   limite?: number;
+  showSearchGroup?: boolean; 
 }
 
-export default function AlbumList({ limite }: AlbumListProps) {
+export default function AlbumList({ limite, showSearchGroup = false }: AlbumListProps) {
   const { albums, fetchAlbums, searchAlbums } = useContext(AlbumContext);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -26,11 +27,14 @@ export default function AlbumList({ limite }: AlbumListProps) {
 
   return (
     <div className="max-w-7xl flex flex-col items-center">
-      <SearchGroup
-        onSearch={handleSearch}
-        placeholder="Pesquisar álbum"
-        hrefCreate="/album/create/"
-      />
+      {showSearchGroup && (
+        <SearchGroup
+          onSearch={handleSearch}
+          placeholder="Pesquisar álbum"
+          hrefCreate="/albums/create/"
+        />
+      )}
+      
       <div className="flex flex-wrap gap-6">
         {albums.map((album) => (
           <div className="relative w-56 space-y-4" key={album.id}>
