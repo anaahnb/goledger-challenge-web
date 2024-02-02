@@ -9,7 +9,7 @@ export default function AlbumForm() {
   const [formData, setFormData] = useState({ title: '', artistKey: '', rating: 0, releaseDate: '' });
   const [successMessage, setSuccessMessage] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const { artists, fetchArtists } = useContext(ArtistContext); // Use o contexto do artista aqui
+  const { artists, fetchArtists } = useContext(ArtistContext);
   const router = useRouter();
 
   useEffect(() => {

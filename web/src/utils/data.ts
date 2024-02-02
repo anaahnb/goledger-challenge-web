@@ -6,9 +6,9 @@ export interface Id {
 export interface Song {
   "@key": string;
   title: string;
+  albumKey: string;
+  artistKeys: string[];
   explicit: boolean;
-  artists: Id[];
-  album: Id;
 }
 
 export interface Album {
@@ -38,5 +38,7 @@ export interface ArtistFormData extends Artist {
   "@assetType": "artist";
 }
 
-export interface CreateAnArtist extends Omit<Artist, "@key"> {}
-export interface UpdateAnArtist extends Partial<ArtistFormData> {}
+export interface CreateArtist extends Omit<Artist, "@key"> {}
+export interface UpdateArtist extends Partial<ArtistFormData> {}
+
+export interface CreateSong extends Omit<Song, "@key"> {}
