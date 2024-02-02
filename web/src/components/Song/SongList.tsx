@@ -1,19 +1,51 @@
 "use client";
 
-import { useContext, useEffect } from 'react';
-import { SongContext } from '@/context/Song';
+import { useContext, useEffect, useState } from 'react';
+import { SongContext, SongItem } from '@/context/Song';
+import SearchGroup from '@/components/SearchGroup';
 
-export default function SongList({ limite }: { limite?: number }) {
+interface SongListProps {
+  limite?: number;
+  showSearchGroup?: boolean;
+}
+
+export default function SongList({ limite, showSearchGroup = false }: SongListProps) {
   const { songs, fetchSongs } = useContext(SongContext);
+  const [filteredSongs, setFilteredSongs] = useState<SongItem[]>([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     fetchSongs(limite);
   }, [fetchSongs, limite]);
 
+  useEffect(() => {
+    if (!searchTerm) {
+      setFilteredSongs(songs);
+      return;
+    }
+
+    const filtered = songs.filter(song =>
+      song.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredSongs(filtered);
+  }, [searchTerm, songs]);
+
+  const handleSearch = (term: string) => {
+    setSearchTerm(term);
+  };
+
   return (
-    <div className="flex flex-wrap gap-6 max-w-7xl">
-      {songs &&
-        songs.map((song) => (
+    <div className="flex flex-col items-center max-w-7xl">
+      {showSearchGroup && (
+        <SearchGroup
+          onSearch={handleSearch}
+          placeholder="Pesquisar música"
+          hrefCreate="/songs/create"
+        />
+      )}
+
+      <div className="flex flex-wrap gap-6 max-w-7xl">
+        {filteredSongs.map((song) => (
           <div className="w-56 space-y-4" key={song.id}>
             <div className="h-56 bg-zinc-100"></div>
             <div className="space-y-1 capitalize">
@@ -30,7 +62,6 @@ export default function SongList({ limite }: { limite?: number }) {
                   </span>
                 )}
               </div>
-
               <p className="flex items-center gap-2">
                 <span aria-hidden="true">
                   {' '}
@@ -52,6 +83,7 @@ export default function SongList({ limite }: { limite?: number }) {
             </div>
           </div>
         ))}
+      </div>
     </div>
   );
 }

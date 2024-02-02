@@ -14,10 +14,8 @@ export default function Song() {
           <h1 className="text-xl text-center font-bold tracking-tight text-zinc-900 sm:text-2xl"> As músicas que são tendência e novidade na Scrobble  </h1>
         </div>
 
-        {/* <SearchGroup hrefCreate="/songs/create" placeholder="Pesquisar artista" /> */}
-
         <SongContextProvider>
-          <SongList />      
+          <SongList showSearchGroup/>      
         </SongContextProvider>
 
       </section>
