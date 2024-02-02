@@ -28,7 +28,7 @@ export default function AlbumForm() {
             "@key": formData.artistKey,
           },
           "rating": formData.rating,
-          "releaseDate": formattedReleaseDate,
+          "releaseDate": formattedReleaseDate ,
           "title": formData.title,
         }]
       });

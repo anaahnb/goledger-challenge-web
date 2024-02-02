@@ -1,10 +1,9 @@
-"use client";
-
 import { createContext } from "react";
 
 interface AlbumProps {
   albums: AlbumItem[];
   fetchAlbums: (limit?: number) => Promise<void>;
+  searchAlbums: (term: string) => void;
 }
 
 export interface AlbumItem {

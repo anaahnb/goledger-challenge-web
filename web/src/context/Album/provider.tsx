@@ -1,4 +1,5 @@
 "use client";
+
 import { useCallback, useState } from "react";
 import api from "@/services/api";
 import { Album } from "@/utils/data";
@@ -24,20 +25,17 @@ export default function AlbumContextProvider(props: AlbumContextProviderProps) {
       });
       const artistData = response.data.result;
 
-      return artistData; 
+      return artistData;
     } catch (error) {
       console.error("Error fetching artist data:", error);
       return null;
     }
   }, []);
-  
 
   const handleAlbumData = async (albumsData: Album[]): Promise<AlbumItem[]> => {
     const albumsWithArtists = await Promise.all(albumsData.map(async (album: Album) => {
       const artistData = await fetchArtistData([album.artist["@key"]]);
       const artistName = artistData.length > 0 ? artistData[0].name : 'Desconhecido';
-
-      console.log(artistName);
 
       return {
         id: album["@key"],
@@ -49,9 +47,8 @@ export default function AlbumContextProvider(props: AlbumContextProviderProps) {
     }));
     return albumsWithArtists;
   };
-  
 
-  const fetchAlbums = useCallback(async (limit?: number) => {
+  const fetchAlbums = useCallback(async (limite?: number) => {
     try {
       const response = await api.post("query/search", {
         query: {
@@ -59,7 +56,7 @@ export default function AlbumContextProvider(props: AlbumContextProviderProps) {
             "@assetType": "album"
           },
           fields: ["@key", "title", "artist", "rating", "releaseDate"],
-          limit
+          limit: limite
         }
       });
 
@@ -72,9 +69,15 @@ export default function AlbumContextProvider(props: AlbumContextProviderProps) {
     }
   }, []);
 
+  const searchAlbums = useCallback((term: string) => {
+    const matchingAlbums = albums.filter(album => album.title.toLowerCase().includes(term.toLowerCase()));
+    setAlbums(matchingAlbums);
+  }, [albums]);
+  
   const values = {
     albums,
     fetchAlbums,
+    searchAlbums
   };
 
   return <AlbumContext.Provider value={values}>{props.children}</AlbumContext.Provider>;
