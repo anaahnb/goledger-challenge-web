@@ -3,8 +3,7 @@ import { createContext } from "react";
 interface SongProps {
   songs: SongItem[];
   song: SongItem | null;
-  fetchFirstSongs: () => Promise<void>;
-  fetchAllSongs: () => Promise<void>;
+  fetchSongs: (limit?: number) => Promise<void>;
   fetchSongById: (songId: string) => Promise<void>;
 }
 

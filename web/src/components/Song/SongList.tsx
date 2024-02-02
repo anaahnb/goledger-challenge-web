@@ -3,15 +3,19 @@
 import { useContext, useEffect } from 'react';
 import { SongContext } from '@/context/Song';
 
-export default function SongList() {
-  const { songs, fetchFirstSongs } = useContext(SongContext);
+interface SongListProps {
+  limite?: number;
+}
+
+export default function SongList({ limite }: SongListProps) {
+  const { songs, fetchSongs } = useContext(SongContext);
 
   useEffect(() => {
-    fetchFirstSongs();
-  }, []);
-
+    fetchSongs(limite);
+  }, [fetchSongs, limite]);
+  
   return (
-      <div className='flex flex-wrap gap-6'>
+      <div className='flex flex-wrap gap-6 max-w-7xl'>
         {songs && songs.map((song) => (
           <div className='w-56 space-y-4'>
             <div className='h-56 bg-zinc-100' key={song.id}></div>
@@ -34,4 +38,3 @@ export default function SongList() {
       </div>
   );
 };
-

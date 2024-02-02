@@ -1,10 +1,8 @@
 "use client";
 
 import { useCallback, useState } from "react";
-
-import { SongContext, SongItem } from ".";
-import { Playlist, Song } from "@/utils/data";
 import api from "@/services/api";
+import { SongContext, SongItem } from ".";
 
 interface SongContextProviderProps {
   children: React.ReactNode;
@@ -14,10 +12,10 @@ export default function SongContextProvider(props: SongContextProviderProps) {
   const [songs, setSongs] = useState<SongItem[]>([]);
   const [song, setSong] = useState<SongItem | null>(null);
 
-  async function handleSongsWithRefs(songsData: Song[]): Promise<SongItem[]> {
+  async function handleSongsWithRefs(songsData: any[]): Promise<SongItem[]> {
     const songsWithRefs = await Promise.all(
-      songsData.map(async (song: Song) => {
-        const artistKeys = song.artists.map((artist) => artist["@key"]);
+      songsData.map(async (song: any) => {
+        const artistKeys = song.artists.map((artist: any) => artist["@key"]);
         const artistResponse = await api.post("query/search", {
           query: {
             selector: {
@@ -53,7 +51,7 @@ export default function SongContextProvider(props: SongContextProviderProps) {
     return songsWithRefs;
   }
 
-  const fetchFirstSongs = useCallback(async () => {
+  const fetchSongs = useCallback(async (limite?: number) => {
     try {
       const response = await api.post("query/search", {
         query: {
@@ -61,33 +59,16 @@ export default function SongContextProvider(props: SongContextProviderProps) {
             "@assetType": "song"
           },
           fields: ["@key", "title", "artists", "explicit", "album"],
-          limit: 6
+          limit: limite
         }
       });
-      const songsData = response.data.result;
 
-      const songsWithRefs = await handleSongsWithRefs(songsData);
-      setSongs(songsWithRefs);
-    } catch (error) {
-      console.error(error);
-    }
-  }, []);
-
-  const fetchAllSongs = useCallback(async () => {
-    try {
-      const response = await api.post("query/search", {
-        query: {
-          selector: {
-            "@assetType": "song"
-          },
-          fields: ["@key", "title", "artists", "explicit", "album"]
-        }
-      });
       const songsData = response.data.result;
-      const songsWithRefs = await handleSongsWithRefs(songsData);
-      setSongs(songsWithRefs);
+      const songs = await handleSongsWithRefs(songsData);
+      setSongs(songs);
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching albums:", error);
+      throw error;
     }
   }, []);
 
@@ -115,8 +96,7 @@ export default function SongContextProvider(props: SongContextProviderProps) {
   const values = {
     songs,
     song,
-    fetchFirstSongs,
-    fetchAllSongs,
+    fetchSongs,
     fetchSongById,
   };
 

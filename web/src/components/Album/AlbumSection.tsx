@@ -12,7 +12,7 @@ export default function AlbumSection() {
         <h1 className="text-xl text-center font-medium tracking-tight text-zinc-900 sm:text-2xl"> Lançamentos de álbuns adicionados pela galera do Scrobble </h1>
       </div>
       <AlbumContextProvider>
-        <AlbumList limite={6} />              
+        <AlbumList limite={5} />              
       </AlbumContextProvider>
 
       <div className="mt-20">

@@ -12,7 +12,7 @@ export default function SongSection() {
         <h1 className="text-xl text-center font-medium tracking-tight text-zinc-900 sm:text-2xl"> Ouça as músicas do momento de graça na comunidade Scrobble </h1>
       </div>
       <SongContextProvider>
-        <SongList />              
+        <SongList limite={5} />              
       </SongContextProvider>
 
       <div className="mt-20">
