@@ -24,6 +24,7 @@ export interface Artist {
   "@key": string;
   name: string;
   about: string;
+  explicit: boolean;
 }
 
 export interface Playlist {

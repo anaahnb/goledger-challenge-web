@@ -1,6 +1,8 @@
+import AlbumList from "@/components/Album/AlbumList";
 import Navigation from "@/components/Navigation";
 import SearchGroup from "@/components/SearchGroup";
 import SongList from "@/components/Song/SongList";
+import AlbumContextProvider from "@/context/Album/provider";
 import SongContextProvider from "@/context/Song/provider";
 
 export default function Song() {
@@ -16,9 +18,9 @@ export default function Song() {
 
         {/* <SearchGroup hrefCreate="/songs/create" placeholder="Pesquisar artista" /> */}
 
-        <SongContextProvider>
-          <SongList />      
-        </SongContextProvider>
+        <AlbumContextProvider>
+          <AlbumList />      
+        </AlbumContextProvider>
 
       </section>
     </main>
